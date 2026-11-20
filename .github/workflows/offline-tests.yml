@@ -1,0 +1,51 @@
+name: Offline tests
+
+"on":
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Show Python version
+        run: python3 --version
+
+      - name: Run offline unit tests
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: src
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Parse Python sources
+        run: |
+          python3 - <<'PY'
+          import ast
+          from pathlib import Path
+
+          paths = sorted(Path("src").rglob("*.py"))
+          paths += sorted(Path("scripts").glob("*.py"))
+          paths += sorted(Path("tests").glob("*.py"))
+          for path in paths:
+              ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+          print(f"Parsed {len(paths)} Python files")
+          PY
+
+      - name: Validate shell syntax
+        run: bash -n scripts/install.sh
+
+      - name: Audit public distribution
+        run: python3 scripts/audit-release.py .
+
+      - name: Verify release manifest
+        run: sha256sum -c RELEASE-MANIFEST.sha256
