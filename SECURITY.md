@@ -1,36 +1,59 @@
-# Security Policy
+# Security policy
 
-## Supported scope
+Codex-HackerOne-Investigator is security-sensitive software. Please report defects
+that could weaken scope enforcement, authorization checks, secret handling, transport
+validation, rate controls, or the emergency STOP mechanism privately.
 
-Stages 1–4 are the supported public components. Stage 5 VMware integration is
-unfinished and receives no security-support claim.
+## Supported versions
 
-## Reporting a vulnerability
+The current public preview is the supported release line:
 
-Do not include secrets, live targets, private HackerOne program material, customer
-data, or exploit evidence in a public issue. Contact the repository owner through a
-private channel listed on the eventual GitHub repository profile. If no private
-channel is published, open a minimal issue asking for one without disclosing details.
+| Version | Supported |
+| --- | --- |
+| 0.1.x | Yes |
+| Earlier or unreleased private builds | No |
 
-Include:
+Security fixes may be made only on the default branch and released in a newer version.
 
-- affected component and version or commit;
-- a safe, offline reproduction using synthetic data;
-- security impact and assumptions;
-- suggested remediation, if known.
+## Report a vulnerability privately
 
-## Operational security
+GitHub Private Vulnerability Reporting is enabled for this repository. Submit a
+private report through the repository's
+[security advisory form](https://github.com/CaptnCrypto/Codex-HackerOne-Investigator/security/advisories/new).
 
-- Never store API keys, cookies, tokens, passwords, or signed URLs in this repository.
-- Never replace the empty public allowlist with a live target configuration.
-- Keep evidence and program snapshots in a private case directory.
-- Treat the emergency STOP file as a required control, not a convenience flag.
-- Do not expose the broker Unix socket to untrusted users.
-- Re-verify program policy, scope, exact targets, DNS, rate limits, and approval before each live window.
-- Do not enable the example systemd service without a local security review.
+Include, when safe:
 
-## Security limitations
+- the affected version or commit;
+- the component and security control involved;
+- reproducible steps using synthetic data and offline targets;
+- expected and observed behavior;
+- potential impact and suggested remediation; and
+- whether any credential, private target, or third-party data may have been exposed.
 
-This project cannot establish authorization, prevent a privileged local user from
-bypassing it, or make an unsafe host trustworthy. The broker is a narrow application
-control, not a complete network sandbox or substitute for an egress firewall.
+Do not open a public issue for an unpatched vulnerability. Do not include live API
+keys, cookies, private HackerOne program data, customer data, or private investigation
+evidence in any report. If a safe reproducer requires a secret, describe the required
+secret type rather than sending the value.
+
+## Safe research expectations
+
+- Test only systems you own or are explicitly authorized to assess.
+- Keep active execution disabled while developing or reproducing an issue.
+- Use synthetic fixtures and the offline test suite whenever possible.
+- Keep the emergency STOP file present unless a separately authorized, reviewed live
+  procedure explicitly requires removal.
+- Do not weaken exact-host, exact-URL, DNS-pinning, TLS, method, approval, credential,
+  or rate-limit controls to demonstrate a defect.
+- Never submit a HackerOne report or contact a target automatically.
+
+## Response process
+
+Maintainers will acknowledge a complete private report when practical, investigate
+it, coordinate a fix and disclosure plan, and credit reporters who request attribution.
+Response times are not guaranteed for this preview release.
+
+## Scope of this policy
+
+This policy covers the code and documentation in this repository. It does not grant
+authorization to test HackerOne, Files.com, GitHub, or any other third-party system.
+Authorization must come from the applicable owner or program policy.
