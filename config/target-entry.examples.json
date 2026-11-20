@@ -1,0 +1,42 @@
+{
+  "examples_only_do_not_enable": [
+    {
+      "host": "replace-with-assigned-trial.files.com",
+      "ownership": "researcher-owned-files-trial",
+      "trial_reference": "local-non-secret-trial-label",
+      "verified_at": "REPLACE_WITH_TIMEZONE_AWARE_TIMESTAMP",
+      "approved": false,
+      "path_prefixes": [
+        "/api/rest/v1/"
+      ],
+      "approved_exact_urls": [
+        "https://replace-with-assigned-trial.files.com/api/rest/v1/folders/example?path=example"
+      ],
+      "target_id": "replace-with-safe-target-id",
+      "approved_methods": [
+        "GET"
+      ],
+      "approved_ip_addresses": [
+        "REPLACE_WITH_CURRENT_PUBLIC_IP"
+      ],
+      "approved_hypothesis_ids": [
+        "replace-with-approved-hypothesis-id"
+      ],
+      "credential": {
+        "header_name": "X-FilesAPI-Key",
+        "secret_file": "/var/lib/files-research/config/secrets/files-api-key"
+      }
+    },
+    {
+      "host": "replace-with-assigned-trial.hosted-by-files.com",
+      "ownership": "researcher-owned-public-hosting",
+      "trial_reference": "local-non-secret-trial-label",
+      "verified_at": "REPLACE_WITH_TIMEZONE_AWARE_TIMESTAMP",
+      "approved": false,
+      "path_prefixes": [
+        "/"
+      ],
+      "approved_exact_urls": []
+    }
+  ]
+}

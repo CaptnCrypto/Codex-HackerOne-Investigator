@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "enabled": false,
+  "source_snapshot_id": null,
+  "policy_verification": {
+    "verified_at": null,
+    "expires_at": null,
+    "policy_sha256": null,
+    "verified_by": null
+  },
+  "researcher_approval": {
+    "approved": false,
+    "approved_at": null,
+    "approval_reference": null
+  },
+  "rate_limit": {
+    "program_maximum_requests_per_second": 2.0,
+    "requests_per_second": 1.5,
+    "scope": "global-across-all-broker-clients"
+  },
+  "broker": {
+    "execution_enabled": false,
+    "max_request_bytes": 1048576,
+    "max_response_bytes": 4194304
+  },
+  "targets": []
+}

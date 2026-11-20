@@ -1,0 +1,25 @@
+[Unit]
+Description=Files.com research request broker (DISABLED TEMPLATE)
+ConditionPathExists=!/var/lib/files-research/runtime/STOP
+
+[Service]
+Type=simple
+User=files-research
+Group=files-research
+UMask=0077
+ExecStart=/opt/codex-hackerone-investigator/scripts/files-request-broker /var/lib/files-research/config/allowlist.json /var/lib/files-research/runtime /var/lib/files-research/evidence
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/files-research/runtime /var/lib/files-research/evidence
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target

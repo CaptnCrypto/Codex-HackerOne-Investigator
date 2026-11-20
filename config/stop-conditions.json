@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "immediate_stop_conditions": [
+    {
+      "id": "customer-data",
+      "trigger": "Any customer data, customer account, or customer site is encountered.",
+      "action": "Stop that path immediately; do not continue to determine extent; retain only a redacted excerpt, timestamp, and non-sensitive request identifier; delete captured customer data; do not send it to AI or third parties."
+    },
+    {
+      "id": "code-execution",
+      "trigger": "A harmless fixed string or arithmetic expression confirms code execution.",
+      "action": "Stop immediately; do not read files, environment variables, credentials, or data; do not change state, establish a shell or persistence, or make further network connections."
+    },
+    {
+      "id": "credential-check",
+      "trigger": "One minimal authentication or identity check has been made for an exposed credential when the current program policy explicitly permits it.",
+      "action": "Stop regardless of success; do not list resources, retrieve data, modify anything, reuse the session, or explore permissions."
+    },
+    {
+      "id": "scope-uncertainty",
+      "trigger": "Ownership, exact hostname authorization, account ownership, or current policy status is uncertain.",
+      "action": "Deny the request and require fresh manual verification and researcher approval."
+    },
+    {
+      "id": "availability",
+      "trigger": "Latency, errors, throttling, or other behavior suggests service degradation.",
+      "action": "Stop all participating tools; do not retry until manually reviewed."
+    },
+    {
+      "id": "rate-governor",
+      "trigger": "A tool cannot use the shared limiter or its traffic cannot be accounted for globally.",
+      "action": "Do not run that tool."
+    },
+    {
+      "id": "forbidden-feature",
+      "trigger": "A prohibited feature, customer-controlled asset, third-party infrastructure, or unlisted asset would be exercised.",
+      "action": "Do not send the request."
+    },
+    {
+      "id": "sensitive-evidence",
+      "trigger": "Evidence contains tokens, passwords, cookies, API keys, personal data, or unrelated confidential content.",
+      "action": "Stop capture and redact locally before further processing or reporting."
+    }
+  ]
+}

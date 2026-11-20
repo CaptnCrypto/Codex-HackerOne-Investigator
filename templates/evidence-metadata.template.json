@@ -1,0 +1,23 @@
+{
+  "case_id": "REPLACE_WITH_PRIVATE_CASE_ID",
+  "program": "Files.com",
+  "hypothesis_id": "REPLACE",
+  "capture_started_at": "REPLACE_WITH_TIMEZONE_AWARE_TIMESTAMP",
+  "current_policy_sha256": "REPLACE",
+  "approval_reference": "REPLACE",
+  "exact_target_host": "REPLACE_WITH_APPROVED_TRIAL_HOST",
+  "approved_path_prefix": "/",
+  "tool_and_version": "REPLACE",
+  "shared_rate_requests_per_second": 1.5,
+  "controlled_trial_reference": "REPLACE_WITH_NON_SECRET_LABEL",
+  "controlled_account_roles": [],
+  "documentation_expected_behavior": "REPLACE",
+  "documentation_reference": "REPLACE",
+  "observed_behavior": "REPLACE",
+  "stop_condition_triggered": null,
+  "secrets_redacted": false,
+  "customer_data_present": false,
+  "prohibited_tool_evidence": false,
+  "researcher_reproduced": false,
+  "researcher_reviewed": false
+}

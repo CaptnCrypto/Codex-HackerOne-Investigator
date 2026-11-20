@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "program": "REPLACE_WITH_PROGRAM_NAME",
+  "report_reference": "REPLACE_WITH_LOCAL_DRAFT_REFERENCE",
+  "finding_reproduced_by_researcher": false,
+  "current_scope_reverified": false,
+  "expected_behavior_documented": false,
+  "minimum_evidence_sufficient": false,
+  "all_secrets_redacted": false,
+  "customer_data_absent": false,
+  "prohibited_evidence_sources_absent": false,
+  "unsupported_or_ai_inferred_claims_removed": false,
+  "one_issue_only": false,
+  "stopping_rule_disclosed_if_applicable": false,
+  "researcher_final_approval": false,
+  "approved_at": null,
+  "approval_reference": null,
+  "submission_performed_by": null
+}

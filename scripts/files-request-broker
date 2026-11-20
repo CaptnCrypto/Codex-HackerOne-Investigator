@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+PACKAGE_ROOT = Path(__file__).resolve().parents[1] / "src"
+sys.path.insert(0, str(PACKAGE_ROOT))
+
+from filesprep.broker import BrokerError
+from filesprep.broker_service import serve
+from filesprep.scope_guard import ScopeGuardError
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Files.com exact-target host request broker")
+    parser.add_argument("config", type=Path)
+    parser.add_argument("runtime_dir", type=Path)
+    parser.add_argument("evidence_dir", type=Path)
+    args = parser.parse_args()
+    try:
+        serve(args.config, args.runtime_dir, args.evidence_dir)
+    except (BrokerError, ScopeGuardError) as exc:
+        print(f"files-request-broker: {exc}", file=sys.stderr)
+        return 2
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
