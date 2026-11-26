@@ -299,3 +299,80 @@ as described in [SECURITY.md](SECURITY.md).
 
 Licensed under the [Apache License, Version 2.0](LICENSE). The license decision and
 provenance responsibility are recorded in [LICENSE-PROPOSAL.md](LICENSE-PROPOSAL.md).
+
+---
+
+## Beginner's guide: understanding the workflow
+
+This section complements the technical documentation above. It explains the moving parts without weakening the project's approval and safety requirements.
+
+### What happens in each stage?
+
+1. **Stage 1 — Read-only program discovery:** The `h1-ro` command retrieves permitted HackerOne API information after the operator supplies private credentials and explicitly starts a sync. It does not automatically test targets.
+2. **Stage 2 — Normalize and prioritize:** Retrieved program and scope data is transformed into structured artifacts and an opportunity ranking for human review. A high ranking is not authorization.
+3. **Stage 3 — Offline preflight:** The operator prepares a **private** configuration and checks that the planned host, URL, method, approvals, policy metadata, and rate limits satisfy the guard. These checks do not send requests to the target.
+4. **Stage 4 — Controlled request broker:** An explicitly started local service accepts a reviewed request envelope through a Unix socket. The broker applies scope and transport restrictions before any network request.
+5. **Stage 5 — Planned isolation:** The VMware worker and its network isolation controls remain unfinished. Do not treat the design documentation as a functioning sandbox.
+
+### A practical, safe first session
+
+From a fresh checkout, start with the **offline-only** checks:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m unittest discover -s tests -v
+python3 scripts/audit-release.py .
+scripts/h1-ro --help
+scripts/files-preflight --help
+```
+
+These commands help confirm the environment and show available options. The help commands do not synchronize HackerOne data or authorize live testing. Consult [INSTALL.md](INSTALL.md) before installing globally or configuring a private case.
+
+### Common terms
+
+| Term | Meaning in this project |
+| --- | --- |
+| **Scope** | The exact systems, hosts, paths, and methods permitted for a particular engagement |
+| **Allowlist** | A privately maintained list of explicitly approved targets and constraints |
+| **Preflight** | Offline validation performed before considering a live request |
+| **Request envelope** | Structured JSON describing a proposed request and its approval context |
+| **Broker** | A local gatekeeper that validates and performs tightly controlled network requests |
+| **Unix socket** | Local inter-process communication channel between client and broker |
+| **TLS** | Encrypted network transport with certificate and hostname verification |
+| **IP pinning** | Constraining a request to an approved resolved network address |
+| **DNS rebinding** | A risk in which a hostname resolves to a different, potentially disallowed address |
+| **Rate limiter** | A mechanism to constrain request frequency |
+| **STOP file** | An emergency safety control that prevents or interrupts broker activity |
+| **SHA-256 manifest** | A record of file hashes used to detect later changes to artifacts |
+| **Fail closed** | Rejecting activity when an approval, safety check, or dependency is uncertain |
+
+### Where does information belong?
+
+| Information | Appropriate location |
+| --- | --- |
+| Public source code and synthetic tests | This repository |
+| Generic templates and design documentation | This repository |
+| Real HackerOne credentials | Private, permission-restricted files **outside** the repository |
+| Live allowlists, approval records, and engagement policy | Private case/configuration directory |
+| API responses, investigation notes, and evidence | Private case directory |
+| Public bug reports about the tool | GitHub issues, without secrets or sensitive engagement data |
+| Security vulnerabilities in the project | Private vulnerability reporting described in [SECURITY.md](SECURITY.md) |
+
+### Troubleshooting checklist
+
+If a command refuses to run, first identify **which control** rejected it. A missing private configuration, stale approval, unexpected DNS answer, permission error, or active STOP condition is not something to work around casually. Review the applicable section of [INSTALL.md](INSTALL.md), [SAFETY_MODEL.md](docs/SAFETY_MODEL.md), and [STAGES.md](docs/STAGES.md), and correct the underlying authorization or configuration issue before proceeding.
+
+For any actual research activity, retain the current program policy, approved scope, test plan, rate limits, and investigator approval in private records. The repository's public templates are intentionally disabled.
+
+### GitHub terminology for new contributors
+
+- **Clone:** Download a working copy of the repository.
+- **Branch:** An isolated line of development.
+- **Commit:** A saved version-controlled change.
+- **Pull request:** A proposed change that can be reviewed before merging.
+- **CI / GitHub Actions:** Automated checks that run on commits or pull requests; this project's public CI is offline-only.
+- **Release tag:** A named reference to a particular version of the code.
+- **README:** The project overview; the linked guides contain deeper instructions.
+
+### Before opening a pull request
+
+Run the offline tests and release audit, review your diff for secrets and private artifacts, and read [CONTRIBUTING.md](CONTRIBUTING.md). Do not add live targets or make the public templates executable by default. The project is intended to preserve **explicit human control**, not automate authorization decisions.
